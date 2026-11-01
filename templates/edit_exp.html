@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Expense</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script defer src="{{ url_for('static', filename='script.js') }}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="container mt-5">
+
+        <div class="card shadow p-4 mx-auto" style="max-width:600px;">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>
+                    <i class="fa-solid fa-pen"></i>
+                    Edit Expense
+                </h2>
+
+                <label class="theme-switch">
+                    <input type="checkbox" id="theme-toggle" title="Toggle Theme" onchange="toggleTheme()">
+                    <span class="slider">
+                        <span class="sun">☀️</span>
+                        <span class="moon">🌙</span>
+                    </span>
+                </label>
+            </div>
+
+            <form method="POST">
+
+                <div class="mb-3">
+                    <label class="form-label">Title</label>
+                    <input type="text" name="title" title="Title" class="form-control" value="{{ expense['title'] }}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Amount</label>
+                    <input type="number" name="amount" title="Amount" class="form-control" value="{{ expense['amount'] }}" step="any" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Category</label>
+
+                    <select title="Category" name="category" class="form-select" required>
+
+                        <option value="Food" {% if expense['category']=='Food' %}selected{% endif %}>Food</option>
+                        <option value="Groceries" {% if expense['category']=='Groceries' %}selected{% endif %}>Groceries</option>
+                        <option value="Rent / EMI" {% if expense['category']=='Rent / EMI' %}selected{% endif %}>Rent / EMI</option>
+                        <option value="Bills" {% if expense['category']=='Bills' %}selected{% endif %}>Bills</option>
+                        <option value="Insurance" {% if expense['category']=='Insurance' %}selected{% endif %}>Insurance</option>
+                        <option value="Internet & Wi-Fi" {% if expense['category']=='Internet & Wi-Fi' %}selected{% endif %}>Internet & Wi-Fi</option>
+                        <option value="Gas Cylinder" {% if expense['category']=='Gas Cylinder' %}selected{% endif %}>Gas Cylinder</option>
+                        <option value="Transportation" {% if expense['category']=='Transportation' %}selected{% endif %}>Transportation</option>
+                        <option value="Healthcare & Medicines" {% if expense['category']=='Healthcare & Medicines' %}selected{% endif %}>Healthcare & Medicines</option>
+                        <option value="Education & Books" {% if expense['category']=='Education & Books' %}selected{% endif %}>Education & Books</option>
+                        <option value="Children's Expenses" {% if expense['category']=="Children's Expenses" %}selected{% endif %}>Children's Expenses</option>
+                        <option value="Clothing & Footwear" {% if expense['category']=='Clothing & Footwear' %}selected{% endif %}>Clothing & Footwear</option>
+                        <option value="Home Maintenance & Repairs" {% if expense['category']=='Home Maintenance & Repairs' %}selected{% endif %}>Home Maintenance & Repairs</option>
+                        <option value="Furniture & Appliances" {% if expense['category']=='Furniture & Appliances' %}selected{% endif %}>Furniture & Appliances</option>
+                        <option value="Cleaning Supplies" {% if expense['category']=='Cleaning Supplies' %}selected{% endif %}>Cleaning Supplies</option>
+                        <option value="Kitchen Expenses" {% if expense['category']=='Kitchen Expenses' %}selected{% endif %}>Kitchen Expenses</option>
+                        <option value="Entertainment" {% if expense['category']=='Entertainment' %}selected{% endif %}>Entertainment</option>
+                        <option value="Family Functions & Celebrations" {% if expense['category']=='Family Functions & Celebrations' %}selected{% endif %}>Family Functions & Celebrations</option>
+                        <option value="Gifts & Donations" {% if expense['category']=='Gifts & Donations' %}selected{% endif %}>Gifts & Donations</option>
+                        <option value="Miscellaneous" {% if expense['category']=='Miscellaneous' %}selected{% endif %}>Miscellaneous</option>
+
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label">Date</label>
+
+                    <input type="date" name="date" title="Date" class="form-control" value="{{ expense['date'] }}" required>
+                </div>
+
+                <div class="d-grid gap-2">
+
+                    <button type="submit" class="btn btn-warning">
+                        <i class="fa-solid fa-floppy-disk"></i>
+                        Update Expense
+                    </button>
+
+                    <button type="button" class="btn btn-outline-secondary" onclick="goBack()">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        Back
+                    </button>
+
+                    <a href="/" class="btn btn-outline-primary">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        Back to Dashboard
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

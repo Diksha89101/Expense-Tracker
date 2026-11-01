@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Reset password · Ledger</title>
+    <script>try { if (localStorage.getItem("theme") === "dark") document.documentElement.dataset.theme = "dark"; } catch (_error) {}</script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script defer src="{{ url_for('static', filename='script.js') }}"></script>
+</head>
+<body class="auth-page">
+<button type="button" class="icon-button theme-toggle theme-corner" aria-label="Toggle theme">◐</button>
+<main class="auth-shell">
+    <a class="brand auth-brand" href="{{ url_for('login') }}"><span class="brand-mark">L</span><span>ledger<span class="brand-dot">.</span></span></a>
+    <section class="auth-card">
+        <p class="eyebrow">ACCOUNT RECOVERY</p><h1>Choose a new password</h1><p>Use at least six characters to secure your account.</p>
+        {% with messages = get_flashed_messages(with_categories=true) %}{% for category, message in messages %}<div class="auth-flash">{{ message }}</div>{% endfor %}{% endwith %}
+        <form method="post" data-validate>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="form-group"><label class="form-label" for="password">New password</label><input class="form-control" id="password" name="password" type="password" autocomplete="new-password" minlength="6" required autofocus></div>
+            <div class="auth-actions"><button class="button button-primary" type="submit">Update password</button><a class="button button-quiet" href="{{ url_for('login') }}">Cancel</a></div>
+        </form>
+    </section>
+</main>
+</body>
+</html>

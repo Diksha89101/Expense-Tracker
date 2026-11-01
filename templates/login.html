@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sign in · Ledger</title>
+    <script>try { if (localStorage.getItem("theme") === "dark") document.documentElement.dataset.theme = "dark"; } catch (_error) {}</script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script defer src="{{ url_for('static', filename='script.js') }}"></script>
+</head>
+<body class="auth-page">
+<button type="button" class="icon-button theme-toggle theme-corner" aria-label="Toggle theme">◐</button>
+<main class="auth-shell">
+    <a class="brand auth-brand" href="{{ url_for('login') }}"><span class="brand-mark">L</span><span>ledger<span class="brand-dot">.</span></span></a>
+    <section class="auth-card" id="login-section" {% if show_forgot %}hidden{% endif %}>
+        <p class="eyebrow">WELCOME BACK</p><h1>Sign in to Ledger</h1><p>Pick up where you left off with a clear view of your money.</p>
+        {% if error %}<div class="form-error">{{ error }}</div>{% endif %}
+        {% with messages = get_flashed_messages(with_categories=true) %}{% for category, message in messages %}<div class="auth-flash">{{ message }}</div>{% endfor %}{% endwith %}
+        <form action="{{ url_for('login') }}" method="post" data-validate>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="form-group"><label class="form-label" for="username">Username</label><input class="form-control" id="username" name="username" autocomplete="username" required autofocus></div>
+            <div class="form-group"><label class="form-label" for="password">Password</label><input class="form-control" id="password" name="password" type="password" autocomplete="current-password" required></div>
+            <div class="auth-actions"><button class="button button-primary" type="submit">Sign in</button><button class="button button-quiet" type="button" data-go-back>Back</button></div>
+        </form>
+        <p class="auth-links"><a href="{{ url_for('forgot_password') }}">Forgot password?</a><br><br>New to Ledger? <a href="{{ url_for('register') }}">Create an account</a></p>
+    </section>
+    <section class="auth-card" id="forgot-section" {% if not show_forgot %}hidden{% endif %}>
+        <p class="eyebrow">ACCOUNT RECOVERY</p><h1>Reset your password</h1><p>Enter your registered email and we’ll send you a secure reset link.</p>
+        {% with messages = get_flashed_messages(with_categories=true) %}{% for category, message in messages %}<div class="auth-flash">{{ message }}</div>{% endfor %}{% endwith %}
+        <form action="{{ url_for('forgot_password') }}" method="post" data-validate>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="form-group"><label class="form-label" for="forgot-email">Email address</label><input class="form-control" id="forgot-email" name="email" type="email" autocomplete="email" required></div>
+            <div class="auth-actions"><button class="button button-primary" type="submit">Send reset link</button><a class="button button-quiet" href="{{ url_for('login') }}">Back to sign in</a></div>
+        </form>
+    </section>
+</main>
+</body>
+</html>

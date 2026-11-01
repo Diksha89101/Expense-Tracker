@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Monthly income · Ledger</title>
+    <script>try { if (localStorage.getItem("theme") === "dark") document.documentElement.dataset.theme = "dark"; } catch (_error) {}</script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script defer src="{{ url_for('static', filename='script.js') }}"></script>
+</head>
+<body class="auth-page">
+<button type="button" class="icon-button theme-toggle theme-corner" aria-label="Toggle theme">◐</button>
+<main class="auth-shell">
+    <a class="brand auth-brand" href="{{ url_for('home') }}"><span class="brand-mark">L</span><span>ledger<span class="brand-dot">.</span></span></a>
+    <section class="auth-card">
+        <p class="eyebrow">YOUR BASELINE</p><h1>Monthly income</h1><p>Use your take-home monthly income to calculate budget progress.</p>
+        {% with messages = get_flashed_messages(with_categories=true) %}{% for category, message in messages %}<div class="auth-flash">{{ message }}</div>{% endfor %}{% endwith %}
+        <form method="post" action="{{ url_for('add_income') }}" data-validate>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="form-group"><label class="form-label" for="salary">Monthly income</label><input class="form-control" id="salary" name="salary" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="0.00" required></div>
+            <div class="form-group"><label class="form-label" for="currency">Income currency</label><select class="form-select" id="currency" name="currency" required>{% for currency in ['INR', 'USD', 'EUR', 'GBP', 'JPY', 'AUD', 'CAD', 'CHF', 'CNY'] %}<option value="{{ currency }}" {% if currency == 'INR' %}selected{% endif %}>{{ currency }}</option>{% endfor %}</select></div>
+            <div class="auth-actions"><button class="button button-primary" type="submit">Save income</button><a class="button button-quiet" href="{{ url_for('home') }}">Cancel</a></div>
+        </form>
+    </section>
+</main>
+</body>
+</html>
